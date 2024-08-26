@@ -1,6 +1,5 @@
 import React from 'react'
 import { HiDotsVertical } from "react-icons/hi";
-import { FaCircle } from "react-icons/fa";
 import { viewsLikesConvertor, getPublishedTime } from '../utils/helper';
 
 const VideoCard = ({data}) => {

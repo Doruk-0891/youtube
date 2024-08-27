@@ -11,19 +11,19 @@ const Header = () => {
     dispatch(toggleMenu());
   }
   return (
-    <header className='px-5 flex justify-between items-center'>
-        <div className='flex items-center'>
-        <span className='cursor-pointer p-3 hover:bg-gray-300 rounded-full' onClick={() => handleToggleMenu()}>
-        <AiOutlineMenu />
+    <header className='px-5 grid grid-flow-col sticky top-0 z-50 bg-white gap-2'>
+        <div className='flex items-center col-span-1'>
+          <span className='cursor-pointer p-3 hover:bg-gray-300 rounded-full' onClick={() => handleToggleMenu()}>
+          <AiOutlineMenu />
 
-        </span>
-        <img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-logo.jpg" alt='youtube logo' className='w-48 mx-4' />
+          </span>
+          <img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-logo.jpg" alt='youtube logo' className='w-32 mx-4' />
 
         </div>
-        <div>
+        <div className='col-span-10 flex items-center'>
             <Search />
         </div>
-        <div>
+        <div className='col-span-1 flex items-center'>
             <CgProfile size={64} />
         </div>
 

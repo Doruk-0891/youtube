@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 
 
 const VideoContainer = () => {
-  const videosList = useFetchApi(YOUTUBE_API_URL);
+  const {apiData : videosList, loading, error} = useFetchApi(YOUTUBE_API_URL);
+  if (error) {
+    return null;
+  }
   return (
     <div className='py-2 flex gap-8 flex-wrap'>
       {

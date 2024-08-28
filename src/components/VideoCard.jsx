@@ -3,9 +3,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { viewsLikesConvertor, getPublishedTime } from '../utils/helper';
 
 const VideoCard = ({data}) => {
-    const {snippet, contentDetails, statistics} = data;
-    const {duration} = contentDetails;
-    const {viewCount} = statistics;
+    const {snippet, statistics} = data;
     const {publishedAt, title, thumbnails, channelTitle} = snippet;
 
   return (
@@ -18,7 +16,9 @@ const VideoCard = ({data}) => {
                 <h3 className='font-bold'>{title}</h3>
                 <h3 className='font-bold text-gray-400 mt-2'>{channelTitle}</h3>
                 <h3 className='font-bold text-gray-400'>
-                    {viewsLikesConvertor(viewCount)} views &bull; {getPublishedTime(publishedAt)}
+                    {
+                    statistics?.['viewCount'] && 
+                    `${viewsLikesConvertor(statistics?.['viewCount'])} views &bull;` } {getPublishedTime(publishedAt)}
                 </h3>
             </div>
             <div className='col-span-1 pt-2'>

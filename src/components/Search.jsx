@@ -1,53 +1,76 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosSearch } from "react-icons/io";
 import { YOUTUBE_SUGGESTIONS_API_URL } from '../utils/constants';
+import {useDispatch, useSelector} from 'react-redux';
+import { cacheSuggestions } from '../utils/searchSlice';
+import {v4 as uuidv4} from 'uuid';
+import useFetchApi from '../customHooks/useFetchApi';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestionsList, setSuggestionsList] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const dispatch = useDispatch();
+  const searchCache = useSelector(store => store.search);
+  const {fetchData} = useFetchApi();
+
   useEffect(() => {
-    const timer = setTimeout(() => getSuggestions(), 200);
-    
+    if (searchQuery === '') {
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setSuggestionsList(searchCache[searchQuery]);
+      } else {
+        getSuggestions();
+      }
+    }, 200);
+
     return () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
-  
+
   const getSuggestions = async () => {
     const url = `${YOUTUBE_SUGGESTIONS_API_URL}${searchQuery}`;
     try {
-      const apiResponse = await fetch(url);
-      const jsonData = await apiResponse.json();
-      setSuggestionsList(jsonData[1]);
-      
-  } catch (error) {
+      const {apiData, error} = await fetchData(url);
+      setSuggestionsList(apiData[1]);
+      dispatch(cacheSuggestions({
+        [searchQuery]: apiData[1]
+      }));
+    } catch (error) {
       console.error(error);
-  } 
+    }
   }
 
   return (
     <div className='relative container'>
       <div>
-        <input 
-        type="text" 
-        placeholder='Search' 
-        className='w-4/5 border border-gray-400 rounded-l-full px-2 py-2' 
-        value={searchQuery} 
-        onChange={(e) => setSearchQuery(e.target.value)}
+        <input
+          type="text"
+          placeholder='Search'
+          className='w-4/5 border border-gray-400 rounded-l-full px-2 py-2'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setShowSuggestions(false)}
         />
         <button className='pt-2.5 pb-3.5 px-4 rounded-r-full border border-gray-400 border-l-0 bg-gray-300'>
-            <IoIosSearch />
+          <IoIosSearch />
         </button>
       </div>
-      <ul className='absolute w-4/5 bg-gray-100 shadow-sm rounded-2xl border border-gray-300 py-2 m-2'>
       {
-        suggestionsList.map(item => 
-          <li className='px-5 py-2 hover:bg-gray-300 flex items-center gap-2 cursor-pointer'><IoIosSearch />{item}</li>
+        showSuggestions && 
+        <ul className='absolute w-4/5 bg-gray-100 shadow-sm rounded-2xl border border-gray-300 py-2 m-2'>
+          {
+            suggestionsList.map(item =>
+              <li key={uuidv4()} className='px-5 py-2 hover:bg-gray-300 flex items-center gap-2 cursor-pointer'><IoIosSearch />{item}</li>
+            )
+          }
 
-        )
+        </ul>
       }
-
-      </ul>
     </div>
   )
 }

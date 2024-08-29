@@ -7,7 +7,7 @@ const videoSlice = createSlice({
     },
     reducers: {
         setVideosList: (state, action) => {
-            state.videosList = Array.from(action.payload);
+            state.videosList = [...action.payload];
         }
     }
 });

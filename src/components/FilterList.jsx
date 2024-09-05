@@ -38,7 +38,7 @@ const FilterList = () => {
   }
 
   return (
-    <section className='flex gap-3'>
+    <section className='flex gap-3 p-2 pt-0 my-3 sticky top-0 z-10 bg-white'>
         {
             filters.map(filter => 
                 <Button name={filter} key={uuidv4()} handlerFunction={handleFilterSelection} isActive={selectedFilter === filter} />

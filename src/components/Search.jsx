@@ -82,7 +82,7 @@ const Search = () => {
       </div>
         {
           showSuggestions ? 
-          <ul className='absolute w-4/5 bg-gray-100 shadow-sm rounded-2xl border border-gray-300 py-2 m-2'>
+          <ul className='absolute w-4/5 bg-gray-100 shadow-sm rounded-2xl border border-gray-300 py-2 m-2 z-30'>
 
                 { 
                   suggestionsList.map(item =>

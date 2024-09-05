@@ -1,11 +1,10 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-import MainContainer from './MainContainer'
 import { Outlet } from 'react-router-dom'
 
 const Body = () => {
   return (
-    <div className='flex'>
+    <div className='grid grid-cols-[auto,_1fr] h-[calc(100vh-75px)]'>
         <Sidebar />
         <Outlet />
     </div>

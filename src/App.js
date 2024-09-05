@@ -28,7 +28,7 @@ const routes = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-    <div className="">
+    <div className="max-h-screen">
       <Header />
       <RouterProvider router={routes}/>
     </div>

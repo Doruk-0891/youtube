@@ -10,7 +10,7 @@ const Sidebar = () => {
   if (!isMenuOpen) return null;
   
   return (
-      <div className='w-48'>
+      <div className='overflow-y-auto'>
           <ul className='pl-5'>
             {
               sidebarMenuListItems.map(item => 

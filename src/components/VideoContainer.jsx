@@ -37,13 +37,13 @@ const VideoContainer = () => {
   }
 
   return (
-    <>
+    <div>
       {
         apiStatus['isLoading']
           ?
           <h2>Loading...</h2>
           :
-          <div className='py-2 flex gap-x-4 gap-y-8 flex-wrap'>
+          <div className='mt-5 grid gap-4 grid-cols-auto-fill-300 overflow-y-auto'>
             {
               videosList.length > 0 && videosList.map(video => {
                 let videoId = video.id;
@@ -51,6 +51,7 @@ const VideoContainer = () => {
                   videoId = video.id.videoId;
                 }
                 return (
+                  
                   <Link to={`/watch?v=${videoId}`} key={video.id} state={video}>
                     <VideoCard data={video} />
                   </Link>
@@ -60,7 +61,7 @@ const VideoContainer = () => {
             }
           </div>
       }
-    </>
+    </div>
   )
 }
 

@@ -5,6 +5,7 @@ import VideoCard from './VideoCard';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector } from 'react-redux';
 import { setVideosList } from '../utils/videoSlice';
+import HomePageShimmer from './HomePageShimmer';
 
 
 const VideoContainer = () => {
@@ -41,7 +42,7 @@ const VideoContainer = () => {
       {
         apiStatus['isLoading']
           ?
-          <h2>Loading...</h2>
+          <HomePageShimmer />
           :
           <div className='mt-5 grid gap-4 grid-cols-auto-fill-300 overflow-y-auto'>
             {

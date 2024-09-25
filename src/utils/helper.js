@@ -22,7 +22,10 @@ const nameList = [
     'Legacy','Sharp','Dead','Mew','Chuckle','Bubba','Bubble','Sandwich','Smasher','Extreme','Multi','Universe','Ultimate','Death','Ready','Monkey','Elevator','Wrench','Grease','Head','Theme','Grand','Cool','Kid','Boy','Girl','Vortex','Paradox'
 ];
 
-export function viewsLikesConvertor (number) {
+export function viewsLikesConvertor (number=0) {
+    if (number === 0) {
+        return 0;
+    }
     const strNumber = number.toString();
     let range = 1;
     let rangeStr = '';

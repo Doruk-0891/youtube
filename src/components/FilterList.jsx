@@ -2,15 +2,15 @@ import React, { useEffect, useState, useRef} from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import Button from './Button';
 import useFetchApi from '../customHooks/useFetchApi';
-import { YOUTUBE_SEARCH_API_URL, FILTERS_LIST, TRANSLATE } from '../utils/constants';
+import { YOUTUBE_SEARCH_API_URL, FILTERS_LIST, TRANSLATE, YOUTUBE_API_URL } from '../utils/constants';
 import { useDispatch } from 'react-redux';
-import { setVideosList } from '../utils/videoSlice';
+import { clearVideosList, setVideosList } from '../utils/videoSlice';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 
 const FilterList = () => {
   const {fetchData} = useFetchApi();
-  const [selectedFilter, setSelectedFilter] = useState(FILTERS_LIST[0]);
+  const [selectedFilter, setSelectedFilter] = useState(null);
   const [translate, setTranslate] = useState(0);
   const [isLeftVisible, setIsLeftVisible] = useState(false);
   const [isRightVisible, setIsRightVisible] = useState(true);
@@ -18,11 +18,18 @@ const FilterList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    searchBasedOnFilters();
+    if (selectedFilter !== null) {
+      searchBasedOnFilters();
+    }
   }, [selectedFilter]);
 
   const searchBasedOnFilters = async () => {
     let url = `${YOUTUBE_SEARCH_API_URL}${selectedFilter}`;
+
+    if (selectedFilter === 'All') {
+      url = `${YOUTUBE_API_URL}`;
+      dispatch(clearVideosList());
+    }
 
     try {
       const {apiData, error} = await fetchData(url);
